@@ -5,6 +5,9 @@ from aiogram.types import BotCommand, BotCommandScopeDefault
 async def set_commands(bot: Bot):
     commands_list = [
         ["start", "Launch the bot"],
+        ["info"],
+        ["info_html"],
+        ["info_markdown"],
     ]
     commands = [
         BotCommand(
