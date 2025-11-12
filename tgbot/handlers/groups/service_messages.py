@@ -1,17 +1,19 @@
-from aiogram import types
+from aiogram import F, Bot, Router, types
+from aiogram.types import Message
 
-from filters import IsGroup
-from loader import dp, bot
+from tgbot.filters import IsGroup
+
+service_messages_router = Router()
 
 
-@dp.message_handler(IsGroup(), content_types=types.ContentType.NEW_CHAT_MEMBERS)
+@service_messages_router.message(IsGroup(), F.new_chat_members)
 async def new_member(message: Message):
     members = ", ".join([m.get_mention(as_html=True) for m in message.new_chat_members])
     await message.reply(f"Xush kelibsiz, {members}.")
 
 
-@dp.message_handler(IsGroup(), content_types=types.ContentType.LEFT_CHAT_MEMBER)
-async def banned_member(message: Message):
+@service_messages_router.message(IsGroup(), F.left_chat_member)
+async def banned_member(message: Message, bot: Bot):
     if message.left_chat_member.id == message.from_user.id:
         await message.answer(f"{message.left_chat_member.get_mention(as_html=True)} guruhni tark etdi")
     elif message.from_user.id == (await bot.me).id:

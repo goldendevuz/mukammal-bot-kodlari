@@ -5,6 +5,13 @@ from aiogram.types import BotCommand, BotCommandScopeDefault
 async def set_commands(bot: Bot):
     commands_list = [
         ["start", "Launch the bot"],
+        ["set_photo", "Guruh rasmini o'zgartirish"],
+        ["set_title", "Guruh nomini o'zgartirish"],
+        ["set_description", "Guruh haqidagi ma'lumotni o'zgartirish"],
+        ["ro", "Foydalanuvchini Read Only (RO) rejimga o'tkazish"],
+        ["unro", "RO rejimdan chiqarish"],
+        ["ban", "Ban"],
+        ["unban", "Bandan chiqarish"],
     ]
     commands = [
         BotCommand(

@@ -1,14 +1,19 @@
 import io
 
-from aiogram import types, Router
+from aiogram import Bot, Router, types
 from aiogram.types import Message
+from aiogram.filters.command import Command
 
-from filters import IsGroup
+from tgbot.filters import IsGroup, IsAdmin
 
 edit_group_router = Router()
 
 
-@edit_group_router.message(IsGroup(), Command("set_photo", prefixes="!/"), AdminFilter())
+@edit_group_router.message(
+    IsGroup(),
+    Command("set_photo", prefix=("!", "/")),
+    IsAdmin(),
+)
 async def set_new_photo(message: Message):
     source_message = message.reply_to_message
     photo = source_message.photo[-1]
@@ -17,17 +22,23 @@ async def set_new_photo(message: Message):
     #1-usul
     await message.chat.set_photo(photo=input_file)
 
-
-@edit_group_router.message(IsGroup(), Command("set_title", prefixes="!/"), AdminFilter())
-async def set_new_title(message: Message):
+@edit_group_router.message(
+    IsGroup(),
+    Command("set_title", prefix=("!", "/")),
+    IsAdmin(),
+)
+async def set_new_title(message: Message, bot: Bot):
     source_message = message.reply_to_message
     title = source_message.text
     #2-usul
     await bot.set_chat_title(message.chat.id, title=title)
 
 
-
-@edit_group_router.message(IsGroup(), Command("set_description", prefixes="!/"), AdminFilter())
+@edit_group_router.message(
+    IsGroup(),
+    Command("set_description", prefix=("!", "/")),
+    IsAdmin(),
+)
 async def set_new_description(message: Message):
     source_message = message.reply_to_message
     description = source_message.text
